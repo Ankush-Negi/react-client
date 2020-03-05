@@ -34,6 +34,7 @@ body {
 
 .co-container__secondrow {
     display: flex;
+    flex-direction: row;
 }
 
 .firstrow__first {
@@ -83,7 +84,6 @@ body {
 
 .img {
     max-width: 100%;
-    max-height: 100%;
 }
 
 .first__cardImg--discover {
@@ -147,12 +147,18 @@ select {
     border-radius: 4px;
 }
 
+.nowrap {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 input[type=text3],
 select {
     width: 47%;
     padding: 2%;
     margin-top: 2%;
-    margin-right: 4%;
     margin-bottom: 2%;
     display: inline-block;
     border: 1px solid #ccc;
@@ -213,15 +219,17 @@ input[type=submit] {
 
 .product__details {
     padding-left: 1%;
-    flex-basis: 80%;
+    flex-basis: 75%;
 }
 
 .product__price {
-    padding: 1%;
-    flex-basis: 15%;
+    display: flex;
+    padding-right: -6%;
+    flex-basis: 25%;
+    justify-content: flex-end;
 }
 
-.second__pricing{
+.second__pricing {
     display: flex;
     flex-direction: column;
     border-bottom: solid;
@@ -237,9 +245,70 @@ input[type=submit] {
     justify-content: space-between;
 }
 
-.second__total{
+.second__total {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-top: 2%;
+}
+
+@media only screen and (min-width: 992px) {
+    .co-container {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+    .secondrow__first {
+        flex-basis: 60%;
+    }
+
+    .secondrow__second {
+        flex-basis: 40%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .co-container {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .secondrow__first {
+        flex-basis: 50%;
+    }
+
+    .secondrow__second {
+        flex-basis: 50%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .co-container__secondrow {
+        flex-direction: column-reverse;
+    }
+}
+
+@media only screen and (max-width: 399px) {
+    .first__cardImg {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .co-container__firstrow {
+        justify-content: space-between;
+    }
+    
+    .firstrow__second {
+        display: none;
+    }
+
+    .firstrow__third {
+        display: flex;
+        justify-content: flex-end;
+    }
+
 }
