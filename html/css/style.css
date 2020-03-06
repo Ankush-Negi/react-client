@@ -17,9 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 6%;
-    border: medium;
-    border-width: thin;
-    border-color: lightgray;
+    border: thin medium lightgray;
     box-shadow: 5px 5px 6px grey;
     align-content: center;
     background-color: white;
