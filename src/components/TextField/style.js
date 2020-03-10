@@ -8,7 +8,7 @@ const Value = styled.input`
     height: 25px;
     width: 100%;
     padding: 1%;
-    margin: 0% 1% 0% 0%;
+    margin: 0% 5% 0% 0%;
   `;
 
 const Error = styled.p`

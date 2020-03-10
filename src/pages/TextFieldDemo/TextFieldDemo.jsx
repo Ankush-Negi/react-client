@@ -1,9 +1,11 @@
 import React from 'react';
-import { TextField } from '../../components';
+import { TextField, Slider } from '../../components/index';
 import { Text } from '../../components/TextField/style';
+import { IMAGE_PATH_ARRAY } from '../../components/Slider/configs/constants';
 
 const TextFieldDemo = () => (
   <>
+    <Slider altText="Banners" banners={IMAGE_PATH_ARRAY} />
     <Text>This is a Disabled Input</Text>
     <TextField value="Disabled Input" disabled="true" />
     <Text>A Valid Input</Text>
