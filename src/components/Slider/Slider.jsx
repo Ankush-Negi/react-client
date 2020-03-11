@@ -28,6 +28,7 @@ class Slider extends Component {
       if (banners && banners.length) {
         imageIndex = random ? getRandomNumber(banners.length)
           : getNextRoundRobin(banners.length, index);
+          console.log('##########################', `${PUBLIC_IMAGE_FOLDER}${banners[imageIndex]}`)
         imagePath = `${PUBLIC_IMAGE_FOLDER}${banners[imageIndex]}`;
       }
       this.setState({
@@ -43,9 +44,9 @@ class Slider extends Component {
 
   render() {
     const { path } = this.state;
-    console.log('Logging this.state inside render', this.state);
+    // console.log('Logging this.state inside render', this.state);
     const { height, altText } = this.props;
-    console.log('Inside Render', path, height, altText);
+    // console.log('Inside Render', path, height, altText);
     return (
       <>
         <Image src={path} alt={altText} height={height} />
