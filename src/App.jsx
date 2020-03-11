@@ -1,12 +1,10 @@
 import React from 'react';
-import { TextFieldDemo } from './pages/TextFieldDemo';
-import { Slider } from './components/Slider';
+import InputDemo from './pages/InputDemo/InputDemo';
 
 
 const App = () => (
   <>
-    <Slider />
-    <TextFieldDemo />
+    <InputDemo />
   </>
 );
 
