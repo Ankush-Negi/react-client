@@ -6,7 +6,6 @@ import Image from './style';
 
 class Slider extends Component {
   constructor(props) {
-    console.log('Inside constructor');
     super(props);
     this.state = {
       path: '',
@@ -15,20 +14,16 @@ class Slider extends Component {
   }
 
   componentDidMount() {
-    console.log('Inside DidMount');
     const {
       banners, duration, random, defaultBanner,
     } = this.props;
-    console.log('Type Of Banners: ', typeof banners);
     this.timer = setInterval(() => {
-      console.log('Logging this.state inside setInterval', this.state);
       const { index } = this.state;
       let imageIndex = 0;
       let imagePath = `${defaultBanner}`;
       if (banners && banners.length) {
         imageIndex = random ? getRandomNumber(banners.length)
           : getNextRoundRobin(banners.length, index);
-          console.log('##########################', `${PUBLIC_IMAGE_FOLDER}${banners[imageIndex]}`)
         imagePath = `${PUBLIC_IMAGE_FOLDER}${banners[imageIndex]}`;
       }
       this.setState({
@@ -44,9 +39,7 @@ class Slider extends Component {
 
   render() {
     const { path } = this.state;
-    // console.log('Logging this.state inside render', this.state);
     const { height, altText } = this.props;
-    // console.log('Inside Render', path, height, altText);
     return (
       <>
         <Image src={path} alt={altText} height={height} />
