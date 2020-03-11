@@ -3,12 +3,13 @@
 <head>
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="container__firstrow">
+    <div class="co-container">
+        <div class="co-container__firstrow">
             <div class="firstrow__first">
                 <p><b>Checkout</b></p>
             </div>
@@ -23,12 +24,169 @@
                 <i class="fa fa-window-close fa-sm"></i>
             </div>
         </div>
-        <div class="container__secondrow">
+        <div class="co-container__secondrow">
             <div class="secondrow__first">
-                <p>Payment Block</p>
+                <div class="first__wallet">
+                    <b>
+                        <p class="p--color">Wallet</p>
+                    </b>
+                </div>
+                <div class="first__cardImg">
+                    <div class="first__cardImg--discover">
+                        <img class="img" src="images/cards/discover.png" alt="Discover Card">
+                        <div class="p--color">
+                            <p class="p--caption">Ending with 8899</p>
+                        </div>
+                    </div>
+                    <div class="first__cardImg--master">
+                        <img class="img" src="images/cards/mastercard.png" alt="Master Card">
+                        <div class="p--color">
+                            <p class="p--caption">Ending with 8899</p>
+                        </div>
+                    </div>
+                    <div class="first__cardImg--visa">
+                        <img class="img" src="images/cards/visa.png" alt="Visa Card">
+                        <div class="p--color">
+                            <p class="p--caption">Ending with 8899</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="first__newCard">
+                    <b>
+                        <p class="p--color">New Card</p class="p--lightText">
+                    </b>
+                </div>
+                <div class="first__cardDetails">
+
+                    <form>
+                        <input type="text1" placeholder="Name on Card"><br>
+                        <input type="text2" placeholder="xxxx-xxxx-xxxx-xxxx"><br>
+                        <input type="text3" placeholder="MM/YY">
+                        <input type="text4" placeholder="CVV">
+
+                        <input type="submit" value="CONTINUE">
+                    </form>
+                </div>
             </div>
             <div class="secondrow__second">
-                <p>Cart Block</p>
+                <div class="second__product">
+                    <div class="product__size">
+                        <img class="img--size" src="/html/images/products/mobile-holder.jpg">
+                    </div>
+                    <div class="product__details">
+                        <p><b>Mobile Holder</b></p>
+                        <div class="p--color">
+                            <i>
+                                <p class="p--caption">Black</p>
+                            </i>
+                            <b>
+                                <p class="p--caption">Quantity: 1</p>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="product__price">
+                        <div class="p--color">
+                            <p class="p--caption">$ 10.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second__product">
+                    <div class="product__size">
+                        <img class="img--size" src="/html/images/products/rado.jpg">
+                    </div>
+                    <div class="product__details">
+                        <p><b>Rado Watch</b></p>
+                        <div class="p--color">
+                            <i>
+                                <p class="p--caption">Black</p>
+                            </i>
+                            <b>
+                                <p class="p--caption">Quantity: 1</p>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="product__price">
+                        <div class="p--color">
+                            <p class="p--caption">$ 10.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second__product">
+                    <div class="product__size">
+                        <img class="img--size" src="/html/images/products/usb-c-2-micro.jpeg">
+                    </div>
+                    <div class="product__details">
+                        <p><b>C type to Micro Converter</b></p>
+                        <div class="p--color">
+                            <i>
+                                <p class="p--caption">Black</p>
+                            </i>
+                            <b>
+                                <p class="p--caption">Quantity: 1</p>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="product__price">
+                        <div class="p--color">
+                            <p class="p--caption">$ 10.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second__product--lastProduct">
+                    <div class="product__size">
+                        <img class="img--size" src="/html/images/products/hard-case.jpg">
+                    </div>
+                    <div class="product__details">
+                        <p><b>Mobile Case</b></p>
+                        <div class="p--color">
+                            <i>
+                                <p class="p--caption">Black</p>
+                            </i>
+                            <b>
+                                <p class="p--caption">Quantity: 1</p>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="product__price">
+                        <div class="p--color">
+                            <p class="p--caption">$ 10.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second__pricing">
+                    <div class="pricing__list">
+                        <div class="name">
+                            <p class="p--caption">Sub Total</p>
+                        </div>
+                        <div class="rate">
+                            <p class="p--caption">$ 100.00</p>
+                        </div>
+                    </div>
+                    <div class="pricing__list">
+                        <div class="name">
+                            <p class="p--caption">Shipping</p>
+                        </div>
+                        <div class="rate">
+                            <p class="p--caption">$ 10.00</p>
+                        </div>
+                    </div>
+                    <div class="pricing__list">
+                        <div class="name">
+                            <p class="p--caption">Taxes</p>
+                        </div>
+                        <div class="rate">
+                            <p class="p--caption">$ 5.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second__total">
+                    <div class="name">
+                        <b><p class="p--caption">Total</p></b>
+                    </div>
+                    <div class="rate">
+                        <b><p class="p--caption">$ 115.00</p></b>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
