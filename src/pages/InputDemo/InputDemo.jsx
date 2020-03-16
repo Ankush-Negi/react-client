@@ -96,7 +96,6 @@ class InputDemo extends React.Component {
         SelectField: sport,
         RadioGroup: cricket || football,
       }).then(() => {
-        console.log('Inside then');
         if (allError[field] !== undefined) {
           this.setState({
             allError: {
@@ -106,7 +105,6 @@ class InputDemo extends React.Component {
           });
         }
       }).catch((error) => {
-        console.log(error);
         if (allError[field] !== error.message) {
           this.setState({
             allError: {
@@ -117,7 +115,6 @@ class InputDemo extends React.Component {
         }
       });
     }
-    console.log('=======>', allError[field]);
     return allError[field];
   }
 
