@@ -226,6 +226,7 @@ input[type=submit] {
     justify-content: space-between;
     padding-top: 2%;
 }
+<<<<<<< HEAD
 
 @media only screen and (min-width: 992px) {
     .co-container {
@@ -285,3 +286,5 @@ input[type=submit] {
     }
 
 }
+=======
+>>>>>>> 51d7abc6875d5df756c1f589a3ac3d4186bdd71a
