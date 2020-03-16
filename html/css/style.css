@@ -65,9 +65,7 @@ body {
 
 .first__wallet {
     padding: 1% 0% 1% 0%;
-    border-bottom: solid;
-    border-width: thin;
-    border-color: lightgray;
+    border-bottom: thin solid lightgray;
 }
 
 .first__cardImg {
@@ -228,3 +226,65 @@ input[type=submit] {
     justify-content: space-between;
     padding-top: 2%;
 }
+<<<<<<< HEAD
+
+@media only screen and (min-width: 992px) {
+    .co-container {
+        margin: 0 100px 0 100px;
+    }
+
+    .secondrow__first {
+        flex-basis: 60%;
+    }
+
+    .secondrow__second {
+        flex-basis: 40%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .co-container {
+        margin: 0 20px 0 20px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .secondrow__first {
+        flex-basis: 50%;
+    }
+
+    .secondrow__second {
+        flex-basis: 50%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .co-container__secondrow {
+        flex-direction: column-reverse;
+    }
+}
+
+@media only screen and (max-width: 399px) {
+    .first__cardImg {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .co-container__firstrow {
+        justify-content: space-between;
+    }
+    
+    .firstrow__second {
+        display: none;
+    }
+
+    .firstrow__third {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+}
+=======
+>>>>>>> 51d7abc6875d5df756c1f589a3ac3d4186bdd71a
