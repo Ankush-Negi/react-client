@@ -8,7 +8,17 @@ export default function Button(props) {
   } = props;
   return (
     <>
-      <Buttons value={value} disabled={disabled} style={style} onClick={onClick} color={color}><b>{value}</b></Buttons>
+      <Buttons
+        value={value}
+        disabled={disabled}
+        style={style}
+        onClick={onClick}
+        color={color}
+      >
+        <b>
+          {value}
+        </b>
+      </Buttons>
     </>
   );
 }

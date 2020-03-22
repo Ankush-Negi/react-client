@@ -1,12 +1,12 @@
 import React from 'react';
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './theme';
-import { ChildrenDemo } from './pages';
+import { TraineeComponent } from './pages/Trainee';
 
 const App = () => (
   <MuiThemeProvider theme={theme}>
     <>
-      <ChildrenDemo />
+      <TraineeComponent />
     </>
   </MuiThemeProvider>
 );
