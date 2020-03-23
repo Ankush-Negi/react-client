@@ -1,1 +1,1 @@
-export { ChildrenDemo } from './ChildrenDemo';
+export { TraineeComponent } from './Trainee';
