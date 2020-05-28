@@ -33,21 +33,13 @@ class AddDialog extends React.Component {
     };
   }
 
-  handleNameChange = (e) => {
-    this.setState({ name: e.target.value });
-  };
-
-  handleEmailChange = (e) => {
-    this.setState({ email: e.target.value });
-  };
-
-  handlePasswordChange = (e) => {
-    this.setState({ password: e.target.value });
-  };
-
-  handleConfirmPasswordChange = (e) => {
-    this.setState({ confirmPassword: e.target.value });
-  };
+  handleChange = (e) => {
+    const { value } = e.target;
+    const { name } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  }
 
   hasError = (field) => {
     const {
@@ -105,7 +97,7 @@ class AddDialog extends React.Component {
       open, onClose, onSubmit,
     } = this.props;
     const {
-      isValid, name, email, password,
+      isValid, name, email, password, confirmPassword,
     } = this.state;
     return (
       <div>
@@ -120,6 +112,8 @@ class AddDialog extends React.Component {
                 <Grid item xs={12}>
                   <TextField
                     label="Name *"
+                    value={name}
+                    name="name"
                     error={this.getError('Name')}
                     variant="outlined"
                     fullWidth
@@ -130,7 +124,7 @@ class AddDialog extends React.Component {
                         </InputAdornment>
                       ),
                     }}
-                    onChange={this.handleNameChange}
+                    onChange={this.handleChange}
                     helperText={this.getError('Name')}
                     onBlur={() => this.isTouched('Name')}
                   />
@@ -140,6 +134,8 @@ class AddDialog extends React.Component {
                     label="Email Address"
                     error={this.getError('Email')}
                     variant="outlined"
+                    name="email"
+                    value={email}
                     fullWidth
                     InputProps={{
                       startAdornment: (
@@ -148,7 +144,7 @@ class AddDialog extends React.Component {
                         </InputAdornment>
                       ),
                     }}
-                    onChange={this.handleEmailChange}
+                    onChange={this.handleChange}
                     helperText={this.getError('Email')}
                     onBlur={() => this.isTouched('Email')}
                   />
@@ -156,6 +152,8 @@ class AddDialog extends React.Component {
                 <Grid item xs={6}>
                   <TextField
                     label="Password"
+                    name="password"
+                    value={password}
                     error={this.getError('Password')}
                     type="password"
                     variant="outlined"
@@ -167,7 +165,7 @@ class AddDialog extends React.Component {
                         </InputAdornment>
                       ),
                     }}
-                    onChange={this.handlePasswordChange}
+                    onChange={this.handleChange}
                     helperText={this.getError('Password')}
                     onBlur={() => this.isTouched('Password')}
                   />
@@ -175,6 +173,8 @@ class AddDialog extends React.Component {
                 <Grid item xs={6}>
                   <TextField
                     error={this.getError('ConfirmPassword')}
+                    name="confirmPassword"
+                    value={confirmPassword}
                     type="password"
                     label="Confirm Password"
                     variant="outlined"
@@ -186,7 +186,7 @@ class AddDialog extends React.Component {
                         </InputAdornment>
                       ),
                     }}
-                    onChange={this.handleConfirmPasswordChange}
+                    onChange={this.handleChange}
                     helperText={this.getError('ConfirmPassword')}
                     onBlur={() => this.isTouched('ConfirmPassword')}
                   />

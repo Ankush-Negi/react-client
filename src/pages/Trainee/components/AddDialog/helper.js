@@ -12,7 +12,7 @@ const ValidationSchema = yup.object().shape({
   Password: yup
     .string()
     .required('Password is required')
-    .min(8, 'Must contain 8 characters, atleast one uppercase letter, one lowercase letter and a number'),
+    .matches('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$', { message: 'Must contain 8 characters, atleast one uppercase letter, one lowercase letter and a number' }),
   ConfirmPassword: yup
     .string()
     .oneOf([yup.ref('Password')], 'Must match password')
