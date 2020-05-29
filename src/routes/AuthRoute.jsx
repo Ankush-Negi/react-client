@@ -4,7 +4,8 @@ import { Route } from 'react-router-dom';
 import { AuthLayout } from '../layouts/index';
 
 const AuthLayoutRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest}
+  <Route
+    {...rest}
     render={(matchProps) => (
       <AuthLayout>
         <Component {...matchProps} />

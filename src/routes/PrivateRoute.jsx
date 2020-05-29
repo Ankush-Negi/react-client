@@ -4,7 +4,8 @@ import { Route } from 'react-router-dom';
 import { PrivateLayout } from '../layouts/index';
 
 const PrivateLayoutRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest}
+  <Route
+    {...rest}
     render={(matchProps) => (
       <PrivateLayout>
         <Component {...matchProps} />
