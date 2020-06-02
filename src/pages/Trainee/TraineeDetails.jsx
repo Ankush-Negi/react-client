@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { useParams, useHistory } from 'react-router-dom';
 import traineeData from './data/trainee';
 import { NoMatch } from '../NoMatch';
@@ -70,7 +69,6 @@ const TraineeDetails = () => {
             </div>
           </Card>
         ) : <NoMatch />}
-      <Box p={1} />
       <div className={classes.wrapper}>
         <Button className={classes.button} onClick={history.goBack}>Back</Button>
       </div>

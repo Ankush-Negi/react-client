@@ -3,12 +3,12 @@ import propTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import { AuthLayout } from '../layouts/index';
 
-const AuthLayoutRoute = ({ component: Component, ...rest }) => (
+const AuthLayoutRoute = ({ component: Comp, ...rest }) => (
   <Route
     {...rest}
     render={(matchProps) => (
       <AuthLayout>
-        <Component {...matchProps} />
+        <Comp {...matchProps} />
       </AuthLayout>
     )}
   />
