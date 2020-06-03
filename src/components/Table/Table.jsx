@@ -74,7 +74,6 @@ const TableComponent = (props) => {
     id, data, column, order, orderBy, onSort, onSelect, actions,
     count, page, onChangePage, rowsPerPage,
   } = props;
-  console.log('This is the data---------->', data);
 
   const handleSortIcon = (e) => {
     e.target.style.color = 'black';

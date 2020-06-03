@@ -6,11 +6,33 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
+import * as moment from 'moment';
+import { MyContext } from '../../../../contexts';
 
 class RemoveDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  handleSnackBar = (data, openSnackBar) => {
+    const date = '2019-02-14T18:15:11.778Z';
+    const isAfter = (moment(data.createdAt).isAfter(date));
+    if (isAfter) {
+      this.setState({
+        message: 'This is a success Message! ',
+      }, () => {
+        const { message } = this.state;
+        openSnackBar(message, 'success');
+      });
+    } else {
+      this.setState({
+        message: 'This is an error',
+      }, () => {
+        const { message } = this.state;
+        openSnackBar(message, 'error');
+      });
+    }
   }
 
   render = () => {
@@ -22,7 +44,7 @@ class RemoveDialog extends React.Component {
         <DialogTitle id="simple-dialog-title"><center>Remove Trainee</center></DialogTitle>
         <div>
           <DialogContentText>
-            <center>Do you really want to delete trainee ?</center>
+            Do you really want to delete trainee ?
           </DialogContentText>
         </div>
         <DialogContent>
@@ -30,9 +52,25 @@ class RemoveDialog extends React.Component {
             <Button onClick={() => onClose()} variant="contained">
               Cancel
             </Button>
-            <Button color="primary" variant="contained" onClick={() => { onSubmit(data); }}>
-              Submit
-            </Button>
+            <MyContext.Consumer>
+              {(value) => {
+                const { openSnackBar } = value;
+                return (
+                  <>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={() => {
+                        onSubmit(data);
+                        this.handleSnackBar(data, openSnackBar);
+                      }}
+                    >
+                    Delete
+                    </Button>
+                  </>
+                );
+              }}
+            </MyContext.Consumer>
           </DialogActions>
         </DialogContent>
       </Dialog>

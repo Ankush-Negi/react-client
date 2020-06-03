@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import { MyContext } from '../../../../contexts';
 
 const useStyles = {
   root: {
@@ -146,10 +147,17 @@ class EditDialog extends React.Component {
             <Button onClick={onClose} color="primary">
             Cancel
             </Button>
-            <Button disabled={!isValid} onClick={() => { onSubmit({ name, email }); this.formReset(); }} color="primary">
 
-            Submit
-            </Button>
+            <MyContext.Consumer>
+              {(value) => (
+                <>
+                  <Button disabled={!isValid} onClick={() => { onSubmit({ name, email }); this.formReset(); value.openSnackBar('This is a success message ! ', 'success'); }} color="primary">
+
+              Submit
+                  </Button>
+                </>
+              )}
+            </MyContext.Consumer>
           </DialogActions>
         </DialogContent>
       </Dialog>

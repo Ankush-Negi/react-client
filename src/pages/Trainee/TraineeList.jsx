@@ -2,13 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import propTypes from 'prop-types';
-import Box from '@material-ui/core/Box';
 import * as moment from 'moment';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
-  AddDialog, TableComponent, EditDialog, RemoveDialog,
+  AddDialog, EditDialog, RemoveDialog,
 } from './components';
+import { TableComponent } from '../../components/Table';
 import trainee from './data/trainee';
 
 const useStyles = {
@@ -86,14 +86,12 @@ render() {
   const getDateFormatted = (date) => moment(date).format('dddd,MMMM Do YYYY, h:mm:ss a');
   return (
     <>
-      <Box p={1} />
       <div className={classes.button}>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
             Add Trainee
         </Button>
       </div>
       <AddDialog open={open} onClose={this.handleClose} onSubmit={this.onSubmitHandle} />
-      <Box p={1} />
       <TableComponent
 
         id="id"
