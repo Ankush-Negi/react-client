@@ -11,6 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import EmailIcon from '@material-ui/icons/Email';
 import PropTypes from 'prop-types';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ls from 'local-storage';
+import callApi from '../../lib/utils/api';
+import { MyContext } from '../../contexts';
 import LoginValidationSchema from './helper';
 
 const styles = () => ({
@@ -47,7 +51,8 @@ class LoginPage extends React.Component {
     this.state = {
       email: '',
       password: '',
-      isValid: true,
+      isValid: false,
+      loader: false,
       allErrors: {},
       touch: {
         Email: true,
@@ -64,21 +69,30 @@ class LoginPage extends React.Component {
     this.setState({ password: e.target.value });
   };
 
+  handleLoader=(data, openSnackBar) => {
+    const { message, status, data: token } = data;
+    const { history } = this.props;
+    this.setState({ loader: false, isValid: true }, () => (status === 'ok' ? (
+      ls.set('token', token),
+      history.push('/trainee'))
+      : (openSnackBar(message, status))));
+  }
+
   hasError = (field) => {
     const {
-      allErrors, email, password,
+      allErrors, email, password, touch,
     } = this.state;
     LoginValidationSchema.validateAt(field, {
       Email: email,
       Password: password,
     }).then(() => {
-      if (allErrors[field]) {
+      if (allErrors[field] && !touch[field]) {
         delete allErrors[field];
         this.setState(allErrors);
       }
       return false;
     }).catch((error) => {
-      if (allErrors[field] !== error.message) {
+      if (allErrors[field] !== error.message && !touch[field]) {
         this.setState({
           allErrors: {
             ...allErrors,
@@ -95,16 +109,14 @@ class LoginPage extends React.Component {
       touch, allErrors, isValid,
     } = this.state;
     this.hasError(field);
-    if (!Object.keys(touch).length && !Object.keys(allErrors).length && isValid) {
-      this.setState({ isValid: false });
-    }
-    if (allErrors[field] && !touch[field]) {
-      if (!isValid) {
-        this.setState({ isValid: true });
-      }
+    if (!Object.keys(touch).length && !Object.keys(allErrors).length && !isValid) {
+      this.setState({ isValid: true });
       return allErrors[field];
     }
-    return false;
+    if ((Object.keys(touch).length || Object.keys(allErrors).length) && isValid) {
+      this.setState({ isValid: false });
+    }
+    return allErrors[field];
   }
 
   isTouched = (value) => {
@@ -115,7 +127,12 @@ class LoginPage extends React.Component {
 
   render = () => {
     const { classes } = this.props;
-    const { isValid } = this.state;
+    const {
+      isValid,
+      email,
+      password,
+      loader,
+    } = this.state;
     return (
       <div>
         <CssBaseline />
@@ -130,7 +147,6 @@ class LoginPage extends React.Component {
             <Grid item xs={12} className={classes.grid}>
               <TextField
                 label="Email Address"
-                error={this.getError('Email')}
                 variant="outlined"
                 fullWidth
                 InputProps={{
@@ -140,15 +156,15 @@ class LoginPage extends React.Component {
                     </InputAdornment>
                   ),
                 }}
-                onChange={this.handleEmailChange}
+                error={this.getError('Email')}
                 helperText={this.getError('Email')}
+                onChange={this.handleEmailChange}
                 onBlur={() => this.isTouched('Email')}
               />
             </Grid>
             <Grid item xs={12} className={classes.grid}>
               <TextField
                 label="Password"
-                error={this.getError('Password')}
                 type="password"
                 variant="outlined"
                 fullWidth
@@ -159,21 +175,37 @@ class LoginPage extends React.Component {
                     </InputAdornment>
                   ),
                 }}
-                onChange={this.handlePasswordChange}
+                error={this.getError('Password')}
                 helperText={this.getError('Password')}
+                onChange={this.handlePasswordChange}
                 onBlur={() => this.isTouched('Password')}
               />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isValid}
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
+            <MyContext.Consumer>
+              {(value) => (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={!isValid}
+                  color="primary"
+                  className={classes.submit}
+                  onClick={async () => {
+                    this.setState({
+                      loader: true,
+                      isValid: false,
+                    });
+                    this.handleLoader(await callApi(
+                      { email, password },
+                      '/user/login', 'post',
+                    ), value.openSnackBar);
+                  }}
+                >
+                  <span>{loader ? <CircularProgress size={20} /> : ''}</span>
+                  Sign In
+                </Button>
+              )}
+            </MyContext.Consumer>
           </div>
         </Grid>
       </div>
@@ -182,7 +214,8 @@ class LoginPage extends React.Component {
 }
 
 LoginPage.propTypes = {
-  classes: PropTypes.oneOfType(['object', 'string']).isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  history: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
 };
 
 export default withStyles(styles)(LoginPage);

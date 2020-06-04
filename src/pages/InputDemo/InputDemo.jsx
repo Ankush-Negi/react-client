@@ -120,7 +120,7 @@ class InputDemo extends React.Component {
 
   render() {
     const { sport, isValid } = this.state;
-    console.log('Inside render', this.state);
+    console.log( this.state);
     return (
       <>
         <p>Name</p>

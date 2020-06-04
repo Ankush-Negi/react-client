@@ -20,9 +20,9 @@ function App() {
           </Route>
           <AuthLayoutRoute exact path="/login" component={LoginPage} />
           <PrivateLayoutRoute exact path="/trainee" component={TraineeComponent} />
-          <PrivateLayoutRoute exact path="/TextFieldDemo" component={TextFieldDemo} />
-          <PrivateLayoutRoute exact path="/ChildrenDemo" component={ChildrenDemo} />
-          <PrivateLayoutRoute exact path="/InputDemo" component={InputDemo} />
+          <PrivateLayoutRoute exact path="/text-field-demo" component={TextFieldDemo} />
+          <PrivateLayoutRoute exact path="/children-demo" component={ChildrenDemo} />
+          <PrivateLayoutRoute exact path="/input-demo" component={InputDemo} />
           <PrivateLayoutRoute component={NoMatch} />
         </Switch>
       </Router>
