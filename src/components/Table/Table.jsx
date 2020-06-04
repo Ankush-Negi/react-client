@@ -60,25 +60,21 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     background: 'none',
   },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
 }));
 
 const TableComponent = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const {
-    id, data, column, order, orderBy, onSort, onSelect, actions,
-    count, page, onChangePage, rowsPerPage,
+    id, data, column, order, orderBy, onSort, onSelect,
+    actions, count, page, onChangePage, rowsPerPage,
   } = props;
 
   const handleSortIcon = (e) => {
     e.target.style.color = 'black';
     setOpen(true);
   };
+
   const handleColorChange = (e) => {
     e.target.style.color = 'grey';
   };
@@ -91,7 +87,6 @@ const TableComponent = (props) => {
             <TableRow key={id}>
               {column.length && column.map((colItem) => (
                 <TableCell
-                  key={colItem.index}
                   align={colItem.align}
                   className={classes.color}
                 >
@@ -121,9 +116,12 @@ const TableComponent = (props) => {
           </TableHead>
           <TableBody>
             {data.length && data.map((element) => (
-              <StyledTableRow hover onClick={() => onSelect(element)} key={element[id]}>
+              <StyledTableRow
+                hover
+                onClick={() => onSelect(element)}
+                key={element[id]}
+              >
                 {column.map(({ field, align, format }) => (
-
                   <StyledTableCell align={align}>
                     {format ? format(element[field]) : element[field]}
                   </StyledTableCell>
@@ -131,20 +129,18 @@ const TableComponent = (props) => {
                 ))}
                 {
                   <StyledTableCell>
-                    <div className={classes.buttons}>
-                      {
-                        actions.map((
-                          { icons, handler },
-                        ) => (
-                          <Button
-                            className={classes.background}
-                            onClick={() => { handler(element); }}
-                          >
-                            {icons}
-                          </Button>
-                        ))
-                      }
-                    </div>
+                    {
+                      actions.map((
+                        { icons, handler },
+                      ) => (
+                        <Button
+                          className={classes.background}
+                          onClick={() => { handler(element); }}
+                        >
+                          {icons}
+                        </Button>
+                      ))
+                    }
                   </StyledTableCell>
                 }
               </StyledTableRow>

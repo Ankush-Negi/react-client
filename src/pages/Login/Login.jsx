@@ -195,10 +195,8 @@ class LoginPage extends React.Component {
                       loader: true,
                       isValid: false,
                     });
-                    this.handleLoader(await callApi(
-                      { email, password },
-                      '/user/login', 'post',
-                    ), value.openSnackBar);
+                    this.handleLoader(await callApi({ data: { email, password } },
+                      '/user/login', 'post'), value.openSnackBar);
                   }}
                 >
                   <span>{loader ? <CircularProgress size={20} /> : ''}</span>
