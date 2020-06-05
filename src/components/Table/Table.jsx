@@ -67,7 +67,7 @@ const TableComponent = (props) => {
   const [open, setOpen] = React.useState(false);
   const {
     id, data, column, order, orderBy, onSort, onSelect,
-    actions, count, page, onChangePage, rowsPerPage,
+    actions, count, page, onChangePage, dataLength, rowsPerPage,
   } = props;
 
   const handleSortIcon = (e) => {
@@ -115,7 +115,7 @@ const TableComponent = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.length && data.map((element) => (
+            {dataLength ? data.map((element) => (
               <StyledTableRow
                 hover
                 onClick={() => onSelect(element)}
@@ -145,12 +145,11 @@ const TableComponent = (props) => {
                 }
               </StyledTableRow>
 
-            ))}
-
+            )) : <h2>Oops!! No more Trainees</h2> }
           </TableBody>
         </Table>
       </TableContainer>
-      {count && (
+      {count ? (
         <TablePagination
           component="div"
           count={count}
@@ -159,7 +158,7 @@ const TableComponent = (props) => {
           rowsPerPageOptions={[0]}
           onChangePage={onChangePage}
         />
-      )}
+      ) : '' }
     </>
   );
 };
@@ -177,6 +176,7 @@ TableComponent.propTypes = {
   page: propTypes.number,
   onChangePage: propTypes.func.isRequired,
   rowsPerPage: propTypes.number,
+  dataLength: propTypes.number.isRequired,
 };
 TableComponent.defaultProps = {
   order: 'asc',

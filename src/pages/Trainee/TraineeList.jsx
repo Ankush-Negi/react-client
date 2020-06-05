@@ -29,7 +29,7 @@ class TraineeList extends React.Component {
       orderBy: 'Date',
       page: 0,
       editOpen: false,
-      remOpen: false,
+      removeOpen: false,
       rowData: {},
       rowsPerPage: 20,
       tableData: [],
@@ -46,17 +46,50 @@ handleClickOpen = () => {
 };
 
 handleClose = () => {
-  this.setState({ open: false, editOpen: false, remOpen: false });
+  this.setState({ open: false, editOpen: false, removeOpen: false });
 };
 
 onSubmitHandle = (values) => {
   this.setState({ open: false, editOpen: false });
+  const { page, rowsPerPage } = this.state;
+  this.handleTableData({
+    params: { skip: page * rowsPerPage, limit: rowsPerPage },
+    headers: { Authorization: ls.get('token') },
+  }, '/trainee', 'Get');
   console.log(values);
 }
 
 handleOnSubmitDelete = (values) => {
-  this.setState({ open: false, remOpen: false });
-  console.log('Deleted Items', values);
+  this.setState({ open: false, removeOpen: false, loader: true });
+  const { page, rowsPerPage, count } = this.state;
+  console.log(values);
+  if (count - page * rowsPerPage !== 1) {
+    this.handleTableData({
+      params: {
+        skip: page * rowsPerPage,
+        limit: rowsPerPage,
+      },
+      headers: { Authorization: ls.get('token') },
+    }, '/trainee', 'Get');
+  } else if (page !== 0) {
+    this.setState({ page: page - 1 });
+    this.handleTableData({
+      params: {
+        skip: (page - 1) * rowsPerPage,
+        limit: rowsPerPage,
+      },
+      headers: { Authorization: ls.get('token') },
+    }, '/trainee', 'Get');
+  } else {
+    this.handleTableData({
+      params: {
+        skip: (page) * rowsPerPage,
+        limit: rowsPerPage,
+      },
+      headers: { Authorization: ls.get('token') },
+    }, '/trainee', 'Get');
+  }
+  console.log(values);
 }
 
 handleSort = (value) => {
@@ -78,19 +111,22 @@ handleEditDialogOpen = (values) => {
 }
 
 handleRemoveDialogOpen = (values) => {
-  this.setState({ remOpen: true, rowData: values });
+  this.setState({ removeOpen: true, rowData: values });
 }
 
 handleChangePage = (event, newPage) => {
   const { rowsPerPage, message, status } = this.state;
-  const value = this.context;
-  return status === 'ok'
-    ? (this.setState({ page: newPage, loader: true }),
-    this.handleTableData({
-      params: { skip: newPage * rowsPerPage, limit: rowsPerPage },
-      headers: { Authorization: ls.get('token') },
-    }, '/trainee', 'Get'))
-    : (value.openSnackBar(message, status));
+  const { value } = this.context;
+  const { openSnackBar } = value;
+  return status === 'ok' ? (this.setState({ page: newPage, loader: true }),
+  this.handleTableData({
+    params: {
+      skip: newPage * rowsPerPage,
+      limit: rowsPerPage,
+    },
+    headers: { Authorization: ls.get('token') },
+  }, '/trainee', 'Get'))
+    : (openSnackBar(message, status));
 };
 
 handleTableData = (data, url, method) => {
@@ -108,13 +144,13 @@ handleTableData = (data, url, method) => {
 componentDidMount = async () => {
   await callApi({
     params: {
-      skip: 0, limit: 10,
+      skip: 0, limit: 20,
     },
     headers: { authorization: ls.get('token') },
   },
   '/trainee',
-  'Get').then((result) => {
-    const { status, message, data } = result;
+  'Get').then((response) => {
+    const { status, message, data } = response;
     const { records, count } = data;
     this.setState({
       tableData: records,
@@ -128,11 +164,11 @@ componentDidMount = async () => {
 }
 
 render() {
+  const { classes } = this.props;
   const {
-    open, order, orderBy, page, editOpen, rowData, remOpen,
+    open, order, orderBy, page, editOpen, rowData, removeOpen,
     rowsPerPage, tableData, count, loader, tableDataLength,
   } = this.state;
-  const { classes } = this.props;
   const getDateFormatted = (date) => moment(date).format('dddd,MMMM Do YYYY, h:mm:ss a');
   return (
     <>
@@ -145,9 +181,7 @@ render() {
       <TableComponent
 
         id="id"
-
         data={tableData}
-
         column={[{
           field: 'name',
           label: 'Name',
@@ -194,7 +228,7 @@ render() {
         data={rowData}
       />
       <RemoveDialog
-        open={remOpen}
+        open={removeOpen}
         onClose={this.handleClose}
         onSubmit={this.handleOnSubmitDelete}
         data={rowData}

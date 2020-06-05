@@ -11,7 +11,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ls from 'local-storage';
 import { MyContext } from '../../../../contexts';
+import callApi from '../../../../lib/utils/api';
 
 const useStyles = {
   root: {
@@ -27,76 +30,99 @@ class EditDialog extends React.Component {
       email: '',
       isValid: false,
       touched: {},
-
+      loader: false,
     };
   }
 
-   handleNameChange = (event) => {
-     const { touched } = this.setState;
-     this.setState({
-       name: event.target.value,
-       isValid: true,
-     }, () => {
-       this.setState({
-         touched: {
-           ...touched,
-           name: true,
-         },
-       });
-     });
-   };
+  handleNameChange = (event) => {
+    const { touched } = this.setState;
+    this.setState({
+      name: event.target.value,
+      isValid: true,
+    }, () => {
+      this.setState({
+        touched: {
+          ...touched,
+          name: true,
+        },
+      });
+    });
+  };
 
-   handleEmailChange = (event) => {
-     const { touched } = this.state;
-     this.setState({
-       email: event.target.value,
-       isValid: true,
-     }, () => {
-       this.setState({
-         touched: {
-           ...touched,
-           email: true,
-         },
-       });
-     });
-   };
+  handleEmailChange = (event) => {
+    const { touched } = this.state;
+    this.setState({
+      email: event.target.value,
+      isValid: true,
+    }, () => {
+      this.setState({
+        touched: {
+          ...touched,
+          email: true,
+        },
+      });
+    });
+  };
 
-     isTouched=(value) => {
-       const { touched } = this.state;
-       const { data } = this.props;
-       console.log(data);
-       this.setState({
-         touched: {
-           ...touched,
-           [value]: true,
+  isTouched=(value) => {
+    const { touched } = this.state;
+    const { data } = this.props;
+    console.log(data);
+    this.setState({
+      touched: {
+        ...touched,
+        [value]: true,
+      },
+      isValid: true,
+    }, () => {
+      Object.keys(data).forEach((keys) => {
+        if (!touched[keys]) {
+          this.setState({
+            [keys]: data[keys],
+          });
+        }
+      });
+    });
+  }
 
-         },
-         isValid: true,
-       }, () => {
-         Object.keys(data).forEach((keys) => {
-           if (!touched[keys]) {
-             this.setState({
-               [keys]: data[keys],
-             });
-           }
-         });
-       });
-     }
+  formReset=() => {
+    this.setState({
+      name: '',
+      email: '',
+      isValid: false,
+      touched: {},
+    });
+  }
 
-     formReset=() => {
-       this.setState({
-         name: '',
-         email: '',
-         isValid: false,
-         touched: {},
-       });
-     }
+  handleFormCallApi=(data, openSnackBar) => {
+    const { name, email, originalId } = data;
+    this.setState({ loader: true });
+    const { onSubmit } = this.props;
+    callApi({ data: { id: originalId, name, email }, headers: { Authorization: ls.get('token') } }, '/trainee', 'put').then((response) => {
+      const { status } = response;
+      if (status === 'ok') {
+        this.setState({
+          loader: false,
+        }, () => {
+          onSubmit({ name, email });
+          openSnackBar('This is a success Message!', 'success');
+        });
+      } else {
+        this.setState({ isValid: false }, () => {
+          openSnackBar('There is an Error ! ', 'error');
+        });
+      }
+    });
+  }
 
   render = () => {
     const {
+      name, email, isValid, loader,
+    } = this.state;
+    const {
       open, onClose, onSubmit, classes, data,
     } = this.props;
-    const { name, email, isValid } = this.state;
+    const { originalId } = data;
     return (
       <Dialog fullWidth maxWidth="lg" onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
         <DialogTitle id="simple-dialog-title">Edit Trainee</DialogTitle>
@@ -126,6 +152,7 @@ class EditDialog extends React.Component {
                 <TextField
                   id="outlined-helperText"
                   label="Email Address"
+                  defaultValue={data.email}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -134,7 +161,6 @@ class EditDialog extends React.Component {
                     ),
                   }}
                   fullWidth
-                  defaultValue={data.email}
                   variant="outlined"
                   onChange={this.handleEmailChange}
                   onBlur={() => { this.isTouched('email'); }}
@@ -151,8 +177,8 @@ class EditDialog extends React.Component {
             <MyContext.Consumer>
               {(value) => (
                 <>
-                  <Button disabled={!isValid} onClick={() => { onSubmit({ name, email }); this.formReset(); value.openSnackBar('This is a success message ! ', 'success'); }} color="primary">
-
+                  <Button disabled={!isValid} onClick={() => { onSubmit({ name, email, originalId }); this.formReset(); value.openSnackBar('This is a success message ! ', 'success'); }} color="primary">
+                    <span>{loader ? <CircularProgress size={20} /> : '' }</span>
               Submit
                   </Button>
                 </>
