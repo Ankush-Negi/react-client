@@ -115,17 +115,12 @@ class InputDemo extends React.Component {
 
   radioOption = () => {
     const { sport } = this.state;
-    if (sport === 'cricket') {
-      return cricketRadioOptions;
-    }
-    if (sport === 'football') {
-      return footballRadioOptions;
-    }
+    return (sport === 'cricket' ? cricketRadioOptions : footballRadioOptions);
   };
 
   render() {
     const { sport, isValid } = this.state;
-    console.log('Inside render', this.state);
+    console.log( this.state);
     return (
       <>
         <p>Name</p>

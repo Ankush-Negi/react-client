@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Slider } from '../../components/index';
 import { Text } from '../../components/TextField/style';
-import { IMAGE_PATH_ARRAY } from '../../components/Slider/configs/constants';
+import { IMAGE_PATH_ARRAY } from '../../configs/constants';
 
 const TextFieldDemo = () => (
   <>
